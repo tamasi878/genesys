@@ -9,6 +9,7 @@ import Foundation
 
 extension TimeInterval {
     static let refreshTimeInSec = 5.0
+    static let delaySeconds = 0.5
 }
 
 extension String {
@@ -65,15 +66,21 @@ final class MessageManager {
         
         switch(command) {
         case .start:
-            managerState = .active
-            startTimer()
+            if managerState != .active {
+                managerState = .active
+                getMessages(setTimer: true)
+            }
             
         case .stop: resetManagerState()
             
         case .resume:
-            delegate?.newMessagesArrived(self.stack)
-            self.stack.removeAll()
-            managerState = .active
+            if managerState == .paused {
+                DispatchQueue.main.asyncAfter(deadline: .now() + .delaySeconds) {
+                    self.delegate?.newMessagesArrived(self.stack)
+                    self.stack.removeAll()
+                }
+                managerState = .active
+            }
             
         case .pause: managerState = .paused
             
@@ -88,23 +95,30 @@ final class MessageManager {
         managerState = .inactive
     }
     
+    private func getMessages(setTimer: Bool) {
+        self.service.getMessages(url: self.url, limit: .limit, skip: self.skip) { result in
+            switch(result) {
+            case .failure(let error) :
+                print(error)
+            
+            case .success(let newMessages):
+                self.skip += 1
+                if self.managerState == .active {
+                    self.delegate?.newMessagesArrived(newMessages)
+                } else {
+                    self.stack.append(contentsOf: newMessages)
+                }
+            }
+        }
+        if setTimer {
+            self.startTimer()
+        }
+    }
+    
     private func startTimer() {
         self.timer?.invalidate()
         self.timer = Timer.scheduledTimer(withTimeInterval: .refreshTimeInSec, repeats: true) {_ in
-            self.service.getMessages(url: self.url, limit: .limit, skip: self.skip) { result in
-                switch(result) {
-                case .failure(let error) :
-                    print(error)
-                
-                case .success(let newMessages):
-                    self.skip += 1
-                    if self.managerState == .active {
-                        self.delegate?.newMessagesArrived(newMessages)
-                    } else {
-                        self.stack.append(contentsOf: newMessages)
-                    }
-                }
-            }
+            self.getMessages(setTimer: false)
         }
     }
     

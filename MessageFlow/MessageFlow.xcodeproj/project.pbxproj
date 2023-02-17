@@ -25,6 +25,9 @@
 		FD43B822299D3EF100B53AF0 /* MessagesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD43B821299D3EF100B53AF0 /* MessagesViewModel.swift */; };
 		FD43B825299E26AF00B53AF0 /* CollectionExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD43B824299E26AF00B53AF0 /* CollectionExtension.swift */; };
 		FD43B827299E29A400B53AF0 /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD43B826299E29A400B53AF0 /* StringExtension.swift */; };
+		FD6BC92F299E70FC00750613 /* MessageDecorator.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD6BC92E299E70FC00750613 /* MessageDecorator.swift */; };
+		FD6BC933299E746000750613 /* MessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD6BC932299E746000750613 /* MessageCell.swift */; };
+		FD6BC935299F6DFA00750613 /* CommandCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD6BC934299F6DFA00750613 /* CommandCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -67,6 +70,9 @@
 		FD43B821299D3EF100B53AF0 /* MessagesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesViewModel.swift; sourceTree = "<group>"; };
 		FD43B824299E26AF00B53AF0 /* CollectionExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionExtension.swift; sourceTree = "<group>"; };
 		FD43B826299E29A400B53AF0 /* StringExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
+		FD6BC92E299E70FC00750613 /* MessageDecorator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageDecorator.swift; sourceTree = "<group>"; };
+		FD6BC932299E746000750613 /* MessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCell.swift; sourceTree = "<group>"; };
+		FD6BC934299F6DFA00750613 /* CommandCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -117,17 +123,18 @@
 		FD43B7DD299CFEC000B53AF0 /* MessageFlow */ = {
 			isa = PBXGroup;
 			children = (
-				FD43B823299E269A00B53AF0 /* Extensions */,
-				FD43B820299D3ED500B53AF0 /* Models */,
-				FD43B81F299D297900B53AF0 /* Storyboards */,
-				FD43B81E299D296400B53AF0 /* Views */,
-				FD43B819299CFF8200B53AF0 /* ViewModels */,
-				FD43B814299CFF2400B53AF0 /* Managers */,
-				FD43B810299CFEE300B53AF0 /* Services */,
 				FD43B7DE299CFEC000B53AF0 /* AppDelegate.swift */,
-				FD43B7E0299CFEC000B53AF0 /* SceneDelegate.swift */,
 				FD43B7E7299CFEC500B53AF0 /* Assets.xcassets */,
 				FD43B7EC299CFEC500B53AF0 /* Info.plist */,
+				FD6BC931299E711000750613 /* Decorator */,
+				FD43B823299E269A00B53AF0 /* Extensions */,
+				FD43B814299CFF2400B53AF0 /* Managers */,
+				FD43B820299D3ED500B53AF0 /* Models */,
+				FD43B7E0299CFEC000B53AF0 /* SceneDelegate.swift */,
+				FD43B810299CFEE300B53AF0 /* Services */,
+				FD43B81F299D297900B53AF0 /* Storyboards */,
+				FD43B819299CFF8200B53AF0 /* ViewModels */,
+				FD43B81E299D296400B53AF0 /* Views */,
 			);
 			path = MessageFlow;
 			sourceTree = "<group>";
@@ -180,6 +187,8 @@
 			isa = PBXGroup;
 			children = (
 				FD43B7E2299CFEC000B53AF0 /* MessagesViewController.swift */,
+				FD6BC932299E746000750613 /* MessageCell.swift */,
+				FD6BC934299F6DFA00750613 /* CommandCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -208,6 +217,14 @@
 				FD43B826299E29A400B53AF0 /* StringExtension.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		FD6BC931299E711000750613 /* Decorator */ = {
+			isa = PBXGroup;
+			children = (
+				FD6BC92E299E70FC00750613 /* MessageDecorator.swift */,
+			);
+			path = Decorator;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -341,6 +358,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FD6BC92F299E70FC00750613 /* MessageDecorator.swift in Sources */,
 				FD43B825299E26AF00B53AF0 /* CollectionExtension.swift in Sources */,
 				FD43B7E3299CFEC000B53AF0 /* MessagesViewController.swift in Sources */,
 				FD43B80F299CFEDF00B53AF0 /* APIService.swift in Sources */,
@@ -350,9 +368,11 @@
 				FD43B816299CFF3700B53AF0 /* BaseService.swift in Sources */,
 				FD43B7DF299CFEC000B53AF0 /* AppDelegate.swift in Sources */,
 				FD43B827299E29A400B53AF0 /* StringExtension.swift in Sources */,
+				FD6BC935299F6DFA00750613 /* CommandCell.swift in Sources */,
 				FD43B813299CFF1800B53AF0 /* FileService.swift in Sources */,
 				FD43B7E1299CFEC000B53AF0 /* SceneDelegate.swift in Sources */,
 				FD43B81B299D003D00B53AF0 /* MessageManager.swift in Sources */,
+				FD6BC933299E746000750613 /* MessageCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

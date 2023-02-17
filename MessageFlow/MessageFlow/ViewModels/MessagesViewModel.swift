@@ -14,9 +14,8 @@ private extension String {
 }
 
 final class MessagesViewModel {
-    var rowsForSections: [[MessageData]] = [[MessageData]]()
-    var sections: [String] = [String]()
-    var publisher: PassthroughSubject<[MessageData], Never> = PassthroughSubject<[MessageData], Never>()
+    var datasource: [MessageData] = [MessageData]()
+    var publisher: PassthroughSubject<(Int, Int), Never> = PassthroughSubject<(Int, Int), Never>()
 
     private var manager: MessageManager?
     
@@ -28,10 +27,11 @@ final class MessagesViewModel {
     func postCommand(_ command: String) {
         let commandValue = MessageManager.Commands.init(rawValue: command) ?? .none
         if commandValue != .none {
+            let commandData = MessageData(title: commandValue.rawValue.uppercased())
+            let lastIndex = datasource.count
+            datasource.append(commandData)
+            publisher.send((lastIndex, 1))
             manager?.executeCommand(commandValue)
-            sections.append(commandValue.rawValue.uppercased())
-            rowsForSections.append([MessageData]())
-            publisher.send([MessageData]())
         }
     }
         
@@ -45,21 +45,21 @@ final class MessagesViewModel {
         guard let url = message.thumbnail else { return }
         
         ImageService().download(from: url) { image in
-            view.image = image
+            DispatchQueue.main.async {
+                view.image = image
+            }
         }
     }
 }
 
 extension MessagesViewModel: MessageManagerDelegate {
     func newMessagesArrived(_ messages: [MessageData]) {
-        if var lastSection = rowsForSections.last {
-            lastSection.append(contentsOf: messages)
-        }
-        publisher.send(messages)
+        let lastIndex = datasource.count
+        datasource.append(contentsOf: messages)
+        publisher.send((lastIndex, messages.count))
     }
     
     func managerResetDone() {
-        rowsForSections.removeAll()
-        sections.removeAll()
+        datasource.removeAll()
     }
 }

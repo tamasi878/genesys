@@ -25,6 +25,6 @@ final class ImageService {
                 self?.imageCache.setObject(image, forKey: url as NSURL)
                 completion(image)
             }
-        }
+        }.resume()
     }
 }
